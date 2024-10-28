@@ -1,8 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
-class ConnectionState extends StatefulWidget {
-  const ConnectionState({
+class ConnectionHelperWidget extends StatefulWidget {
+  const ConnectionHelperWidget({
     super.key,
     required this.child,
     this.noConnectionWidget,
@@ -11,10 +11,10 @@ class ConnectionState extends StatefulWidget {
   final Widget? noConnectionWidget;
 
   @override
-  State<ConnectionState> createState() => _ConnectionStateState();
+  State<ConnectionHelperWidget> createState() => _ConnectionHelperWidgetState();
 }
 
-class _ConnectionStateState extends State<ConnectionState> {
+class _ConnectionHelperWidgetState extends State<ConnectionHelperWidget> {
   ConnectivityResult _connectivityResult = ConnectivityResult.none;
 
   @override
