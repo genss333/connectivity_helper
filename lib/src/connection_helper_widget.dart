@@ -1,13 +1,16 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 
 class ConnectionHelperWidget extends StatefulWidget {
   const ConnectionHelperWidget({
     super.key,
     required this.child,
+    this.onSessionTimeout,
     this.noConnectionWidget,
   });
   final Widget child;
+  final VoidCallback? onSessionTimeout;
   final Widget? noConnectionWidget;
 
   @override
@@ -16,10 +19,21 @@ class ConnectionHelperWidget extends StatefulWidget {
 
 class _ConnectionHelperWidgetState extends State<ConnectionHelperWidget> {
   ConnectivityResult _connectivityResult = ConnectivityResult.none;
+  final sessionConfig = SessionConfig(
+      invalidateSessionForAppLostFocus: const Duration(minutes: 10),
+      invalidateSessionForUserInactivity: const Duration(minutes: 15));
 
   @override
   void initState() {
     super.initState();
+
+    sessionConfig.stream.listen((SessionTimeoutState timeoutEvent) {
+      if (timeoutEvent == SessionTimeoutState.userInactivityTimeout) {
+        widget.onSessionTimeout?.call();
+      } else if (timeoutEvent == SessionTimeoutState.appFocusTimeout) {
+        widget.onSessionTimeout?.call();
+      }
+    });
 
     Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
@@ -31,7 +45,10 @@ class _ConnectionHelperWidgetState extends State<ConnectionHelperWidget> {
   @override
   Widget build(BuildContext context) {
     return _connectivityResult != ConnectivityResult.none
-        ? widget.child
+        ? SessionTimeoutManager(
+            sessionConfig: sessionConfig,
+            child: widget.child,
+          )
         : Scaffold(
             body: widget.noConnectionWidget ??
                 const Center(
