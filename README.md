@@ -2,6 +2,7 @@
 
 ## Set up
 - connectivity_plus : https://pub.dev/packages/connectivity_plus
+- local_session_timeout: https://pub.dev/packages?q=local_session_timeout
 
 ## Example
 
