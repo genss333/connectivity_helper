@@ -1,3 +1,5 @@
 ## 1.0.0
+- initial release.
 
-* TODO: Describe initial release.
+## 1.0.1
+- Refactor Noconnection widget

@@ -1,6 +1,6 @@
 name: connectivity_helper
 description: "A package has implements connectivity_plus and local_session_timeout. build for esier use"
-version: 1.0.0
+version: 1.0.1
 
 environment:
   sdk: ^3.5.1
