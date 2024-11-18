@@ -7,9 +7,11 @@ class ConnectionHelperWidget extends StatefulWidget {
     super.key,
     required this.child,
     this.onSessionTimeout,
+    this.onRetry,
   });
   final Widget child;
   final VoidCallback? onSessionTimeout;
+  final VoidCallback? onRetry;
 
   @override
   State<ConnectionHelperWidget> createState() => _ConnectionHelperWidgetState();
@@ -48,13 +50,7 @@ class _ConnectionHelperWidgetState extends State<ConnectionHelperWidget> {
             child: widget.child,
           )
         : Scaffold(
-            body: NoConnectionWidget(
-              onRetry: () {
-                setState(() {
-                  initState();
-                });
-              },
-            ),
+            body: NoConnectionWidget(onRetry: widget.onRetry),
           );
   }
 }
